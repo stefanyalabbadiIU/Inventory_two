@@ -17,8 +17,10 @@ app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'ejs')
 
 
-app.get('/', (req, res) => {
-    res.render('pages/index', {data : , title : ""});
+app.get('/', async (req, res) => {
+    const db = await getDbConnection();
+    const products = await db.all('SELECT * FROM products');
+    res.render('pages/index', { data: products, title: "Product Inventory" });
 });
 
 app.get("/about", (req, res) => {

@@ -11,35 +11,32 @@
         <!-- nav -->
         <%- include('../partials/menu.ejs') %>
 
-        <!-- reminders -->
+
         <div class="row">
-            <% data.forEach((meeting, index) => { %>
-                <div class="col-md-4 mb-4"> 
-                    <p class="note">
-                        <img src="/images/remind.png" class="img-fluid mb-2" alt="Reminder">
-                        <% if (meeting.mandatory) { %>
-                            <span class="badge bg-danger">Attendance Mandatory!</span>
-                        <% } %> 
-                        <br>
-                        <strong>Location:</strong> <%= meeting.location %><br>
-                        <strong>Date & Time:</strong> <%= meeting.dateTime %><br>
-                        <strong>Topic:</strong> <%= meeting.topic %>
-                        <br> 
-                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#parkingmodal<%= index %>">
-                            Parking
-                        </button>
-                    </p>
-                </div>
-                <%- include('../partials/parkingmodal.ejs', { meeting: meeting, index: index }) %>
-
-
-            <% }) %>
-            
+            <% if (data && data.length > 0) { %>
+                <% data.forEach((product, index) => { %>
+                    <div class="col-md-4 mb-4"> 
+                        <p class="note">
+                            <img src="<%= product.image_path %>" class="img-fluid mb-2" alt="<%= product.name %>">
+                            <br>
+                            <strong>Name:</strong> <%= product.name %><br>
+                            <strong>Description:</strong> <%= product.description %><br>
+                            <strong>Price:</strong> $<%= product.price.toFixed(2) %><br>
+                            <strong>Category:</strong> <%= product.category %><br>
+                            <br> 
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#purchase<%= index %>">
+                                Add To Cart
+                            </button>
+                        </p>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p class="text-center">No products available at the moment.</p>
+            <% } %>
         </div>
+        
         <%- include('../partials/footer.ejs') %>
-
     </div>
-
     
 </body>
 </html>
